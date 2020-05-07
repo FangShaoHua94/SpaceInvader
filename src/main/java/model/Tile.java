@@ -27,4 +27,12 @@ public class Tile {
     public Color getColor(){
         return color;
     }
+
+    public void moveRight(){
+        col+=5;
+    }
+
+    public void moveLeft(){
+        col-=5;
+    }
 }

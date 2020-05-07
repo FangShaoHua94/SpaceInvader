@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 public class Board {
 
     private final int row;
@@ -28,6 +29,21 @@ public class Board {
 
     public Tile[][] getBoard(){
         return board;
+    }
+
+    // before and after array list to update rather than check the all board to update
+    // before to set them to null, after to reset their pos
+    public void updateBoard() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] != null) {
+                    tiles.add(board[i][j]);
+                }
+            }
+        }
+        board = new Tile[row][col];
+        tiles.forEach(block -> board[block.getRow()][block.getCol()] = block);
     }
 
 
