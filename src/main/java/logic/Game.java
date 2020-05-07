@@ -4,6 +4,7 @@ import gui.Painter;
 import javafx.scene.canvas.GraphicsContext;
 import model.Board;
 import static model.character.Bunker.spawnBunker;
+import static model.character.Cannon.spawnCannon;
 
 public class Game implements Runnable {
 
@@ -32,8 +33,12 @@ public class Game implements Runnable {
     }
 
     private void initializeGame(){
+        // add bunker
         for(int i=0;i<BUNKER_COUNT;i++) {
             board.add(spawnBunker(ROW-50,i*50+15).getCharacter());
         }
+
+        // add cannon
+        board.add(spawnCannon(ROW-20,COL/2-5).getCharacter());
     }
 }
