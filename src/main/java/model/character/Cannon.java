@@ -6,6 +6,8 @@ import model.Tile;
 
 import java.util.ArrayList;
 
+import static model.character.Projectile.spawnCannonProjectile;
+
 public class Cannon extends CombatCharacter {
 
     private static final Color COLOR = Color.ORANGE;
@@ -22,9 +24,13 @@ public class Cannon extends CombatCharacter {
                 cannon.add(new Tile(row+i,col+j,COLOR));
             }
         }
-        Speed speed=new Speed(SPEED);
         Projectile projectile=null;
-        return new Cannon(cannon,speed,projectile);
+        return new Cannon(cannon,new Speed(SPEED),projectile);
+    }
+
+    @Override
+    public Projectile fire(){
+        return spawnCannonProjectile(getCharacter().get(4).getRow()-3,getCharacter().get(4).getCol());
     }
 
 }

@@ -15,5 +15,9 @@ public class Alien extends CombatCharacter {
         return null;
     }
 
+    @Override
+    public Projectile fire() {
+        return null;
+    }
 
 }

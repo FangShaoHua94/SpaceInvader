@@ -17,5 +17,6 @@ public abstract class CombatCharacter extends MovableCharacter{
         return projectile;
     }
 
+    public abstract Projectile fire();
 
 }

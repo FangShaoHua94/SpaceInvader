@@ -5,11 +5,15 @@ import javafx.event.EventHandler;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import model.Board;
 import model.character.Cannon;
+
+import static logic.FrameDelay.delay;
 
 
 public class KeyHandler implements EventHandler<KeyEvent> {
 
+    private static final long CONTROL_DELAY=5;
     private Game game;
     private GraphicsContext gc;
 
@@ -21,7 +25,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent keyEvent) {
         Cannon cannon= game.getCannon();
-
+        Board board=game.getBoard();
         switch (keyEvent.getCode()) {
         case LEFT:
             cannon.moveLeft();
@@ -29,9 +33,13 @@ public class KeyHandler implements EventHandler<KeyEvent> {
         case RIGHT:
             cannon.moveRight();
             break;
+        case SPACE:
+            board.add(cannon.fire().getCharacter());
+            break;
         default:
             break;
         }
         game.update();
+        delay(CONTROL_DELAY);
     }
 }
