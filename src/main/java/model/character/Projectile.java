@@ -10,5 +10,10 @@ public class Projectile extends MovableCharacter {
         super(projectile, speed);
     }
 
+//    public static Projectile spawnAlienProjectile(){
+//        ArrayList<Tile> projectile =new ArrayList<>();
+//
+//        return new Projectile(projectile,speed);
+//    }
 
 }

@@ -1,4 +1,4 @@
-import Logic.Game;
+import logic.Game;
 import gui.KeyHandler;
 import gui.Painter;
 import javafx.application.Application;

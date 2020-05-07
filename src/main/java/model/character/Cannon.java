@@ -10,4 +10,9 @@ public class Cannon extends CombatCharacter {
         super(cannon, speed, projectile);
     }
 
+    public static Cannon spawnCannon(){
+        ArrayList<Tile> cannon=new ArrayList<>();
+        return null;
+    }
+
 }

@@ -10,5 +10,10 @@ public class Alien extends CombatCharacter {
         super(alien, speed, projectile);
     }
 
+    public static Alien spawnAlien(){
+        ArrayList<Tile> alien=new ArrayList<>();
+        return null;
+    }
+
 
 }

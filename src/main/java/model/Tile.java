@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class Tile {
 
-    public static int DIMENSION =2;
+    public static int DIMENSION =4;
     private Color color;
     private int row;
     private int col;
@@ -24,4 +24,7 @@ public class Tile {
         return col;
     }
 
+    public Color getColor(){
+        return color;
+    }
 }

@@ -1,6 +1,6 @@
 package gui;
 
-import Logic.Game;
+import logic.Game;
 import javafx.event.EventHandler;
 
 import javafx.scene.canvas.GraphicsContext;

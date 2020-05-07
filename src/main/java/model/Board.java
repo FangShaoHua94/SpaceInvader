@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Board {
 
     private final int row;
@@ -18,6 +20,14 @@ public class Board {
 
     public int getCol(){
         return col;
+    }
+
+    public void add(ArrayList<Tile> character){
+        character.forEach(tile-> board[tile.getRow()][tile.getCol()]=tile);
+    }
+
+    public Tile[][] getBoard(){
+        return board;
     }
 
 
