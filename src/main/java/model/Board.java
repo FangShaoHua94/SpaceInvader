@@ -47,7 +47,9 @@ public class Board {
             }
         }
         board = new Tile[row][col];
-        tiles.forEach(block -> board[block.getRow()][block.getCol()] = block);
+        tiles.forEach(block -> {
+            board[block.getRow()][block.getCol()] = block;
+        });
     }
 
 

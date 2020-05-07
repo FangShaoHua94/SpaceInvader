@@ -44,7 +44,7 @@ public class Alien extends CombatCharacter {
 
     @Override
     public int nextRightCol() {
-        return getCharacter().get(9).getCol()+SPEED;
+        return getCharacter().get(6).getCol()+SPEED;
     }
 
 }
