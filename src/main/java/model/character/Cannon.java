@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Cannon extends CombatCharacter {
 
     private static final Color COLOR = Color.ORANGE;
+    private static final int SPEED=5;
 
     private Cannon(ArrayList<Tile> cannon, Speed speed , Projectile projectile) {
         super(cannon, speed, projectile);
@@ -21,7 +22,7 @@ public class Cannon extends CombatCharacter {
                 cannon.add(new Tile(row+i,col+j,COLOR));
             }
         }
-        Speed speed=null;
+        Speed speed=new Speed(SPEED);
         Projectile projectile=null;
         return new Cannon(cannon,speed,projectile);
     }

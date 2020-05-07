@@ -1,6 +1,5 @@
 package model;
 
-
 import javafx.scene.paint.Color;
 
 public class Tile {
@@ -29,10 +28,10 @@ public class Tile {
     }
 
     public void moveRight(){
-        col+=5;
+        col++;
     }
 
     public void moveLeft(){
-        col-=5;
+        col--;
     }
 }

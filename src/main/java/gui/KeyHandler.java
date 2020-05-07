@@ -24,10 +24,10 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 
         switch (keyEvent.getCode()) {
         case LEFT:
-            cannon.getCharacter().forEach(tile->tile.moveLeft());
+            cannon.moveLeft();
             break;
         case RIGHT:
-            cannon.getCharacter().forEach(tile->tile.moveRight());
+            cannon.moveRight();
             break;
         default:
             break;
