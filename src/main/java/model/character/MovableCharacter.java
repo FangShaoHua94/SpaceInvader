@@ -4,6 +4,8 @@ import model.Tile;
 
 import java.util.ArrayList;
 
+import static logic.Game.withinBoundary;
+
 public abstract class MovableCharacter extends Character {
 
     private Speed speed;
@@ -19,28 +21,26 @@ public abstract class MovableCharacter extends Character {
 
     public void moveRight(){
         for(int i=0;i<speed.getSpeed();i++){
-            getCharacter().forEach(tile->tile.moveRight());
+            getCharacter().forEach(Tile::moveRight);
         }
     }
 
     public void moveLeft(){
         for(int i=0;i<speed.getSpeed();i++){
-            getCharacter().forEach(tile->tile.moveLeft());
+            getCharacter().forEach(Tile::moveLeft);
         }
     }
 
     public void moveUp(){
         for(int i=0;i<speed.getSpeed();i++){
-            getCharacter().forEach(tile->tile.moveUp());
+            getCharacter().forEach(Tile::moveUp);
         }
     }
 
     public void moveDown(){
         for(int i=0;i<speed.getSpeed();i++){
-            getCharacter().forEach(tile->tile.moveDown());
+            getCharacter().forEach(Tile::moveDown);
         }
     }
-
-
 
 }

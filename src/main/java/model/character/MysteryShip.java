@@ -10,4 +10,5 @@ public class MysteryShip extends MovableCharacter {
         super(mysteryShip, speed);
     }
 
+
 }

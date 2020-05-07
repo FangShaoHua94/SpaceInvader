@@ -5,6 +5,8 @@ import model.character.projectile.Projectile;
 
 import java.util.ArrayList;
 
+import static logic.Game.withinBoundary;
+
 public abstract class CombatCharacter extends MovableCharacter{
 
     private Projectile projectile;
@@ -36,5 +38,21 @@ public abstract class CombatCharacter extends MovableCharacter{
             fired=false;
         }
     }
+
+    public void moveLeft(){
+        if(withinBoundary(getCharacter().get(0).getRow(),nextLeftCol())){
+            super.moveLeft();
+        }
+    }
+
+    public void moveRight(){
+        if(withinBoundary(getCharacter().get(0).getRow(),nextRightCol())){
+            super.moveRight();
+        }
+    }
+
+    public abstract int nextLeftCol();
+
+    public abstract int nextRightCol();
 
 }

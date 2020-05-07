@@ -89,7 +89,7 @@ public class Game implements Runnable {
         board.updateBoard();
     }
 
-    public boolean withinBoundary(int row,int col){
+    public static boolean withinBoundary(int row,int col){
         return row >= 0 && row < ROW && col >= 0 && col < COL;
     }
 

@@ -7,6 +7,7 @@ import model.character.projectile.Projectile;
 
 import java.util.ArrayList;
 
+import static logic.Game.withinBoundary;
 import static model.character.projectile.CannonProjectile.spawnCannonProjectile;
 
 public class Cannon extends CombatCharacter {
@@ -36,6 +37,16 @@ public class Cannon extends CombatCharacter {
             return projectile;
         }
         return null;
+    }
+
+    @Override
+    public int nextLeftCol() {
+        return getCharacter().get(0).getCol()-SPEED;
+    }
+
+    @Override
+    public int nextRightCol() {
+        return getCharacter().get(9).getCol()+SPEED;
     }
 
 }
