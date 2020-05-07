@@ -1,4 +1,13 @@
 package model.character;
 
-public class Bunker {
+import model.Tile;
+
+import java.util.ArrayList;
+
+public class Bunker extends Character {
+
+    public Bunker(ArrayList<Tile> bunker) {
+        super(bunker);
+    }
+
 }
