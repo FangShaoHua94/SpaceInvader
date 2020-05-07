@@ -14,8 +14,8 @@ public class Cannon extends CombatCharacter {
     private static final Color COLOR = Color.ORANGE;
     private static final int SPEED=5;
 
-    private Cannon(ArrayList<Tile> cannon, Speed speed , Projectile projectile) {
-        super(cannon, speed, projectile);
+    private Cannon(ArrayList<Tile> cannon, Speed speed) {
+        super(cannon, speed);
     }
 
     public static Cannon spawnCannon(int row,int col){
@@ -25,13 +25,17 @@ public class Cannon extends CombatCharacter {
                 cannon.add(new Tile(row+i,col+j,COLOR));
             }
         }
-        Projectile projectile=null;
-        return new Cannon(cannon,new Speed(SPEED),projectile);
+        return new Cannon(cannon,new Speed(SPEED));
     }
 
     @Override
     public Projectile fire(){
-        return spawnCannonProjectile(getCharacter().get(4).getRow()-3,getCharacter().get(4).getCol());
+        if(!hasFired()) {
+            Projectile projectile =spawnCannonProjectile(getCharacter().get(4).getRow() - 3, getCharacter().get(4).getCol());
+            setProjectile(projectile);
+            return projectile;
+        }
+        return null;
     }
 
 }

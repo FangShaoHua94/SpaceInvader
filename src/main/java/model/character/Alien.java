@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Alien extends CombatCharacter {
 
-    public Alien(ArrayList<Tile> alien, Speed speed, Projectile projectile) {
-        super(alien, speed, projectile);
+    public Alien(ArrayList<Tile> alien, Speed speed) {
+        super(alien, speed);
     }
 
     public static Alien spawnAlien(){

@@ -4,7 +4,7 @@ import gui.Painter;
 import javafx.scene.canvas.GraphicsContext;
 import model.Board;
 import model.character.Cannon;
-import model.character.projectile.CannonProjectile;
+import model.character.CombatCharacter;
 import model.character.projectile.Projectile;
 
 import java.util.ArrayList;
@@ -24,11 +24,13 @@ public class Game implements Runnable {
     private Board board;
     private int score;
     private Cannon cannon;
+    private ArrayList<CombatCharacter> characters;
     private ArrayList<Projectile> projectiles;
 
     public Game(GraphicsContext gc){
         this.gc=gc;
         board=new Board(ROW,COL);
+        characters=new ArrayList<>();
         projectiles=new ArrayList<>();
         score=0;
     }
@@ -60,12 +62,15 @@ public class Game implements Runnable {
 
         // add cannon
         cannon=spawnCannon(ROW-20,COL/2-5);
+        characters.add(cannon);
         board.add(cannon.getCharacter());
     }
 
     public void addProjectile(Projectile projectile){
-        projectiles.add(projectile);
-        board.add(projectile.getCharacter());
+        if(projectile!=null) {
+            projectiles.add(projectile);
+            board.add(projectile.getCharacter());
+        }
     }
 
     private void updateProjectiles(){
@@ -89,7 +94,10 @@ public class Game implements Runnable {
     }
 
     private void removeProjectile(ArrayList<Projectile> toBeRemove){
-        toBeRemove.forEach(projectile -> board.remove(projectile.getCharacter()));
+        toBeRemove.forEach(projectile -> {
+            board.remove(projectile.getCharacter());
+            characters.forEach(character->character.resetFire(projectile));
+        });
         projectiles.removeAll(toBeRemove);
         update();
     }

@@ -13,7 +13,7 @@ import static logic.FrameDelay.delay;
 
 public class KeyHandler implements EventHandler<KeyEvent> {
 
-    private static final long CONTROL_DELAY=5;
+    private static final long CONTROL_DELAY=10;
     private Game game;
     private GraphicsContext gc;
 
