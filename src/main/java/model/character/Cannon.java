@@ -7,7 +7,6 @@ import model.character.projectile.Projectile;
 
 import java.util.ArrayList;
 
-import static logic.Game.withinBoundary;
 import static model.character.projectile.CannonProjectile.spawnCannonProjectile;
 
 public class Cannon extends CombatCharacter {

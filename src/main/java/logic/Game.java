@@ -3,6 +3,7 @@ package logic;
 import gui.Painter;
 import javafx.scene.canvas.GraphicsContext;
 import model.Board;
+import model.character.Alien;
 import model.character.Cannon;
 import model.character.CombatCharacter;
 import model.character.projectile.Projectile;
@@ -10,6 +11,7 @@ import model.character.projectile.Projectile;
 import java.util.ArrayList;
 
 import static logic.FrameDelay.delay;
+import static model.character.Alien.spawnAlien;
 import static model.character.Bunker.spawnBunker;
 import static model.character.Cannon.spawnCannon;
 
@@ -64,6 +66,16 @@ public class Game implements Runnable {
         cannon=spawnCannon(ROW-20,COL/2-5);
         characters.add(cannon);
         board.add(cannon.getCharacter());
+
+        // add alien
+        for(int i=0;i<4;i++){
+            for(int j=0;j<11;j++){
+                Alien alien= spawnAlien(i*10+1,j*15+20);
+                characters.add(alien);
+                board.add(alien.getCharacter());
+            }
+        }
+
     }
 
     public void addProjectile(Projectile projectile){
