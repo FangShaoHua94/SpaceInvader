@@ -34,4 +34,12 @@ public class Tile {
     public void moveLeft(){
         col--;
     }
+
+    public void moveUp(){
+        row--;
+    }
+
+    public void moveDown(){
+        row++;
+    }
 }

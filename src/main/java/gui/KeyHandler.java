@@ -34,7 +34,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
             cannon.moveRight();
             break;
         case SPACE:
-            board.add(cannon.fire().getCharacter());
+            game.addProjectile(cannon.fire());
             break;
         default:
             break;

@@ -4,6 +4,10 @@ import gui.Painter;
 import javafx.scene.canvas.GraphicsContext;
 import model.Board;
 import model.character.Cannon;
+import model.character.projectile.CannonProjectile;
+import model.character.projectile.Projectile;
+
+import java.util.ArrayList;
 
 import static logic.FrameDelay.delay;
 import static model.character.Bunker.spawnBunker;
@@ -20,10 +24,12 @@ public class Game implements Runnable {
     private Board board;
     private int score;
     private Cannon cannon;
+    private ArrayList<Projectile> projectiles;
 
     public Game(GraphicsContext gc){
         this.gc=gc;
         board=new Board(ROW,COL);
+        projectiles=new ArrayList<>();
         score=0;
     }
 
@@ -40,6 +46,7 @@ public class Game implements Runnable {
         initializeGame();
         while(true) {
             Painter.paint(this, gc);
+            updateProjectiles();
             delay(FRAME_DELAY);
         }
 
@@ -54,6 +61,16 @@ public class Game implements Runnable {
         // add cannon
         cannon=spawnCannon(ROW-20,COL/2-5);
         board.add(cannon.getCharacter());
+    }
+
+    public void addProjectile(Projectile projectile){
+        projectiles.add(projectile);
+        board.add(projectile.getCharacter());
+    }
+
+    private void updateProjectiles(){
+        projectiles.forEach(projectile -> projectile.advance());
+        update();
     }
 
     public void update(){

@@ -2,11 +2,12 @@ package model.character;
 
 import javafx.scene.paint.Color;
 import model.Tile;
+import model.character.projectile.Projectile;
 
 
 import java.util.ArrayList;
 
-import static model.character.Projectile.spawnCannonProjectile;
+import static model.character.projectile.CannonProjectile.spawnCannonProjectile;
 
 public class Cannon extends CombatCharacter {
 

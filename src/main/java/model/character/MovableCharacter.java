@@ -29,4 +29,18 @@ public abstract class MovableCharacter extends Character {
         }
     }
 
+    public void moveUp(){
+        for(int i=0;i<speed.getSpeed();i++){
+            getCharacter().forEach(tile->tile.moveUp());
+        }
+    }
+
+    public void moveDown(){
+        for(int i=0;i<speed.getSpeed();i++){
+            getCharacter().forEach(tile->tile.moveDown());
+        }
+    }
+
+
+
 }

@@ -1,6 +1,7 @@
 package model.character;
 
 import model.Tile;
+import model.character.projectile.Projectile;
 
 import java.util.ArrayList;
 
