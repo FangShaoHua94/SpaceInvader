@@ -30,4 +30,9 @@ public class AlienProjectile extends Projectile{
         moveDown();
     }
 
+    @Override
+    public int nextRow() {
+        return getCharacter().get(0).getRow()+SPEED;
+    }
+
 }

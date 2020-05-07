@@ -1,6 +1,5 @@
 package model.character.projectile;
 
-import javafx.scene.paint.Color;
 import model.Tile;
 import model.character.MovableCharacter;
 import model.character.Speed;
@@ -15,5 +14,11 @@ public abstract class Projectile extends MovableCharacter {
     }
 
     public abstract void advance();
+
+    public abstract int nextRow();
+
+    public int getCol(){
+        return getCharacter().get(0).getCol();
+    }
 
 }

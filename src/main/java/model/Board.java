@@ -27,6 +27,10 @@ public class Board {
         character.forEach(tile-> board[tile.getRow()][tile.getCol()]=tile);
     }
 
+    public void remove(ArrayList<Tile> character){
+        character.forEach(tile-> board[tile.getRow()][tile.getCol()]=null);
+    }
+
     public Tile[][] getBoard(){
         return board;
     }

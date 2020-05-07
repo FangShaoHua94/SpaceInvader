@@ -30,4 +30,9 @@ public class CannonProjectile extends Projectile{
         moveUp();
     }
 
+    @Override
+    public int nextRow() {
+        return getCharacter().get(0).getRow()-SPEED;
+    }
+
 }

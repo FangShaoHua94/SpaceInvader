@@ -69,11 +69,29 @@ public class Game implements Runnable {
     }
 
     private void updateProjectiles(){
-        projectiles.forEach(projectile -> projectile.advance());
-        update();
+        ArrayList<Projectile> toBeRemove=new ArrayList<>();
+        projectiles.forEach(projectile -> {
+            if(withinBoundary(projectile.nextRow(),projectile.getCol())){
+                projectile.advance();
+            }else {
+                toBeRemove.add(projectile);
+            }
+        });
+        removeProjectile(toBeRemove);
     }
 
     public void update(){
         board.updateBoard();
     }
+
+    public boolean withinBoundary(int row,int col){
+        return row >= 0 && row < ROW && col >= 0 && col < COL;
+    }
+
+    private void removeProjectile(ArrayList<Projectile> toBeRemove){
+        toBeRemove.forEach(projectile -> board.remove(projectile.getCharacter()));
+        projectiles.removeAll(toBeRemove);
+        update();
+    }
+
 }
