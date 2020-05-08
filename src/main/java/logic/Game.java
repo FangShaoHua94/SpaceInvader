@@ -21,6 +21,7 @@ import java.util.Random;
 import static logic.FrameDelay.delay;
 import static model.AlienTeam.ALIEN_COL;
 import static model.AlienTeam.ALIEN_ROW;
+import static model.Live.startingLive;
 import static model.Score.startingScore;
 import static model.character.Alien.spawnAlien;
 import static model.character.Bunker.spawnBunker;
@@ -51,7 +52,7 @@ public class Game implements Runnable {
         projectiles = new ArrayList<>();
         alienTeam = new AlienTeam();
         score = startingScore();
-        live = new Live();
+        live = startingLive();
     }
 
     public Board getBoard() {
