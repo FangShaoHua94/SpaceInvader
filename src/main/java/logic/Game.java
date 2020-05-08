@@ -96,7 +96,7 @@ public class Game implements Runnable {
             board.add(projectile.getCharacter());
         }else {
             // collision
-            hit(projectile,collidedTiles);
+            hit(collidedTiles);
             removeProjectile(projectile);
         }
     }
@@ -109,7 +109,7 @@ public class Game implements Runnable {
                 if(collidedTiles.isEmpty()) {
                     projectile.advance();
                 }else{
-                    hit(projectile,collidedTiles);
+                    hit(collidedTiles);
                     toBeRemove.add(projectile);
                 }
             }else {
@@ -119,14 +119,17 @@ public class Game implements Runnable {
         removeProjectile(toBeRemove);
     }
 
-    private void hit(Projectile projectile, ArrayList<Tile> collidedTiles){
+    private void hit(ArrayList<Tile> collidedTiles){
         collidedTiles.forEach(tile-> {
             Color color = tile.getColor();
             // need to convert color to custom enum to use switch case
             if (color.equals(Color.GREEN)) {
                 board.destroy(tile);
             } else if (color.equals(Color.PURPLE)) {
-
+                Alien toBeDestroyed = alienTeam.getAlien(collidedTiles.get(0));
+                if(toBeDestroyed!=null){
+                    board.destroy(toBeDestroyed.getCharacter());
+                }
             } else if (color.equals(Color.ORANGE)) {
 
             } else if (color.equals(Color.RED)){

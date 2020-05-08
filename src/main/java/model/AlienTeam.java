@@ -3,6 +3,8 @@ package model;
 import model.character.Alien;
 import model.character.projectile.Projectile;
 
+import java.util.ArrayList;
+
 import static logic.Game.withinBoundary;
 
 public class AlienTeam {
@@ -11,7 +13,6 @@ public class AlienTeam {
     public static final int ALIEN_COL=11;
     private Alien[][] aliens;
     private Direction direction;
-    private int count=0;
 
     enum Direction{
         LEFT,RIGHT
@@ -38,15 +39,12 @@ public class AlienTeam {
 
     public void move(){
         Alien alien;
-        System.out.print(count+" ");
         switch (direction){
         case LEFT:
             alien=leftMostAlien();
             if(withinBoundary(alien.getCharacter().get(0).getRow(),alien.nextLeftCol())){
-                System.out.println("move left");
                 moveLeft();
             }else{
-                System.out.println("move down to right");
                 direction=Direction.RIGHT;
                 moveDown();
             }
@@ -54,10 +52,8 @@ public class AlienTeam {
         case RIGHT:
             alien=rightMostAlien();
             if(withinBoundary(alien.getCharacter().get(0).getRow(),alien.nextRightCol())){
-                System.out.println("move right");
                 moveRight();
             }else{
-                System.out.println("move down to left");
                 direction=Direction.LEFT;
                 moveDown();
             }
@@ -65,7 +61,6 @@ public class AlienTeam {
         default:
             break;
         }
-        count++;
     }
 
     private void moveLeft(){
@@ -114,6 +109,19 @@ public class AlienTeam {
             for(int j=0;j<ALIEN_ROW;j++){
                 if(aliens[j][i]!=null){
                     return aliens[j][i];
+                }
+            }
+        }
+        return null;
+    }
+
+    public Alien getAlien(Tile collidedTile){
+        for(int i=0;i<ALIEN_ROW;i++){
+            for(int j=0;j<ALIEN_COL;j++){
+                Alien alien=aliens[i][j];
+                if(alien!=null && alien.contains(collidedTile)){
+                    aliens[i][j]=null;
+                    return alien;
                 }
             }
         }

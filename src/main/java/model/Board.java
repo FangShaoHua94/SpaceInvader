@@ -73,6 +73,9 @@ public class Board {
         board[tile.getRow()][tile.getCol()]=null;
     }
 
+    public void destroy(ArrayList<Tile> tiles){
+        tiles.forEach(tile -> destroy(tile));
+    }
 
     public void print(){
         for(int i=0;i<row;i++){
