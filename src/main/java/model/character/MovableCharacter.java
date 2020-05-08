@@ -13,10 +13,6 @@ public abstract class MovableCharacter extends Character {
         this.speed = speed;
     }
 
-    public Speed getSpeed() {
-        return speed;
-    }
-
     public void moveRight() {
         for (int i = 0; i < speed.getSpeed(); i++) {
             getCharacter().forEach(Tile::moveRight);

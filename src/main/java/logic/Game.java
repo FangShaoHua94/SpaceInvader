@@ -57,7 +57,7 @@ public class Game implements Runnable {
             Painter.paint(this, gc);
             updateProjectiles();
             alienTeam.move();
-            alienTeam.fire().forEach(projectile -> addProjectile(projectile));
+            alienTeam.fire().forEach(this::addProjectile);
             update();
 //            board.print();
             delay(FRAME_DELAY);
@@ -106,7 +106,7 @@ public class Game implements Runnable {
         projectiles.forEach(projectile -> {
             if (withinBoundary(projectile.nextRow(), projectile.getCol())) {
                 ArrayList<Tile> collidedTiles = board.collision(projectile.nextPos().getCharacter());
-                if (collidedTiles.isEmpty() || collidedTiles.stream().allMatch(tile -> projectile.contains(tile))) {
+                if (collidedTiles.isEmpty() || collidedTiles.stream().allMatch(projectile::contains)) {
                     projectile.advance();
                 } else {
                     toBeRemove.addAll(hit(collidedTiles));
@@ -152,7 +152,7 @@ public class Game implements Runnable {
     }
 
     private void removeProjectile(ArrayList<Projectile> toBeRemove) {
-        toBeRemove.forEach(projectile -> removeProjectile(projectile));
+        toBeRemove.forEach(this::removeProjectile);
     }
 
     private void removeProjectile(Projectile toBeRemove) {
@@ -164,9 +164,9 @@ public class Game implements Runnable {
     }
 
     private Projectile getProjectile(Tile tile) {
-        for (int i = 0; i < projectiles.size(); i++) {
-            if (projectiles.get(i).contains(tile)) {
-                return projectiles.get(i);
+        for (Projectile projectile : projectiles) {
+            if (projectile.contains(tile)) {
+                return projectile;
             }
         }
         return null;

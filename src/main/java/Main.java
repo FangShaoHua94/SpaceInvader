@@ -10,11 +10,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private static double HEIGHT = 600;
-    private static double WIDTH = 800;
-
     @Override
     public void start(Stage stage) {
+        double HEIGHT = 600;
+        double WIDTH = 800;
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Game game = new Game(gc);

@@ -23,10 +23,6 @@ public abstract class CombatCharacter extends MovableCharacter {
         fired = true;
     }
 
-    public Projectile getProjectile() {
-        return projectile;
-    }
-
     public abstract Projectile fire();
 
     protected boolean hasFired() {

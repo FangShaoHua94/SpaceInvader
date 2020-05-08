@@ -31,17 +31,12 @@ public class Board {
 
     public ArrayList<Tile> collision(ArrayList<Tile> character) {
         ArrayList<Tile> collide = new ArrayList<>();
-        for (int i = 0; i < character.size(); i++) {
-            Tile tile = character.get(i);
+        for (Tile tile : character) {
             if (board[tile.getRow()][tile.getCol()] != null) {
                 collide.add(board[tile.getRow()][tile.getCol()]);
             }
         }
         return collide;
-    }
-
-    public Tile collision(int row, int col) {
-        return board[row][col];
     }
 
     public void remove(ArrayList<Tile> character) {
@@ -64,9 +59,7 @@ public class Board {
             }
         }
         board = new Tile[row][col];
-        tiles.forEach(block -> {
-            board[block.getRow()][block.getCol()] = block;
-        });
+        tiles.forEach(block -> board[block.getRow()][block.getCol()] = block);
     }
 
     public void destroy(Tile tile) {
@@ -74,26 +67,7 @@ public class Board {
     }
 
     public void destroy(ArrayList<Tile> tiles) {
-        tiles.forEach(tile -> destroy(tile));
-    }
-
-    public void print() {
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (board[i][j] == null) {
-                    System.out.print('`');
-                } else {
-                    if (Color.ORANGE.equals(board[i][j].getColor())) {
-                        System.out.print("c");
-                    } else if (Color.PURPLE.equals(board[i][j].getColor())) {
-                        System.out.print("a");
-                    } else if (Color.GREEN.equals(board[i][j].getColor())) {
-                        System.out.print("b");
-                    }
-                }
-            }
-            System.out.println();
-        }
+        tiles.forEach(this::destroy);
     }
 
 }

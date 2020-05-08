@@ -45,6 +45,9 @@ public class AlienTeam {
         switch (direction) {
         case LEFT:
             alien = leftMostAlien();
+            if(alien==null){
+                break;
+            }
             if (withinBoundary(alien.getCharacter().get(0).getRow(), alien.nextLeftCol())) {
                 moveLeft();
             } else {
@@ -54,6 +57,9 @@ public class AlienTeam {
             break;
         case RIGHT:
             alien = rightMostAlien();
+            if(alien==null){
+                break;
+            }
             if (withinBoundary(alien.getCharacter().get(0).getRow(), alien.nextRightCol())) {
                 moveRight();
             } else {
@@ -149,9 +155,6 @@ public class AlienTeam {
     private boolean toFire(int seed) {
         Random random = new Random(System.currentTimeMillis() + seed);
         int number = random.nextInt(FIRING_FREQUENCY);
-        if (number == 1) {
-            return true;
-        }
-        return false;
+        return number == 1;
     }
 }
