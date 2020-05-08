@@ -17,6 +17,14 @@ public abstract class Projectile extends MovableCharacter {
 
     public abstract int nextRow();
 
+    public Projectile nextPos() {
+        Projectile projectile=duplicate();
+        projectile.advance();
+        return projectile;
+    }
+
+    public abstract Projectile duplicate();
+
     public int getCol(){
         return getCharacter().get(0).getCol();
     }

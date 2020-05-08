@@ -35,4 +35,11 @@ public class CannonProjectile extends Projectile{
         return getCharacter().get(0).getRow()-SPEED;
     }
 
+    @Override
+    public Projectile duplicate() {
+        ArrayList<Tile> duplicate =new ArrayList<>();
+        getCharacter().forEach(tile -> duplicate.add(new Tile(tile.getRow(),tile.getCol(),tile.getColor())));
+        return new CannonProjectile(duplicate,new Speed(SPEED));
+    }
+
 }

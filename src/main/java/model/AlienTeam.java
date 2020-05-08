@@ -11,6 +11,7 @@ public class AlienTeam {
     public static final int ALIEN_COL=11;
     private Alien[][] aliens;
     private Direction direction;
+    private int count=0;
 
     enum Direction{
         LEFT,RIGHT
@@ -37,12 +38,15 @@ public class AlienTeam {
 
     public void move(){
         Alien alien;
+        System.out.print(count+" ");
         switch (direction){
         case LEFT:
             alien=leftMostAlien();
             if(withinBoundary(alien.getCharacter().get(0).getRow(),alien.nextLeftCol())){
+                System.out.println("move left");
                 moveLeft();
             }else{
+                System.out.println("move down to right");
                 direction=Direction.RIGHT;
                 moveDown();
             }
@@ -50,8 +54,10 @@ public class AlienTeam {
         case RIGHT:
             alien=rightMostAlien();
             if(withinBoundary(alien.getCharacter().get(0).getRow(),alien.nextRightCol())){
+                System.out.println("move right");
                 moveRight();
             }else{
+                System.out.println("move down to left");
                 direction=Direction.LEFT;
                 moveDown();
             }
@@ -59,6 +65,7 @@ public class AlienTeam {
         default:
             break;
         }
+        count++;
     }
 
     private void moveLeft(){

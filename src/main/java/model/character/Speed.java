@@ -6,6 +6,7 @@ public class Speed {
 
     public Speed(int speed) {
         this.speed = speed;
+
     }
 
     public void setSpeed(int speed) {

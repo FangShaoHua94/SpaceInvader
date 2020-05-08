@@ -47,4 +47,11 @@ public class Alien extends CombatCharacter {
         return getCharacter().get(6).getCol()+SPEED;
     }
 
+    @Override
+    public void moveDown(){
+        for(int i=0;i<3;i++){
+            super.moveDown();
+        }
+    }
+
 }

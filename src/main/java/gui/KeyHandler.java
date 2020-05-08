@@ -40,6 +40,7 @@ public class KeyHandler implements EventHandler<KeyEvent> {
             break;
         }
         game.update();
+        Painter.paint(game,gc);
         delay(CONTROL_DELAY);
     }
 }
