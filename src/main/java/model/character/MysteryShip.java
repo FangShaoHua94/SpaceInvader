@@ -1,14 +1,16 @@
 package model.character;
 
 import javafx.scene.paint.Color;
+import model.Score;
 import model.Tile;
 
 import java.util.ArrayList;
 
-public class MysteryShip extends MovableCharacter implements LeftRightMotion {
+public class MysteryShip extends MovableCharacter implements LeftRightMotion,HasPoint {
 
     public static boolean isPresent = false;
     private static final Color COLOR = Color.BLUE;
+    private static final Score POINT=new Score(1000);
     private static final int SPEED = 3;
 
     private MysteryShip(ArrayList<Tile> mysteryShip, Speed speed) {
@@ -38,5 +40,10 @@ public class MysteryShip extends MovableCharacter implements LeftRightMotion {
 
     public static boolean belongTo(Tile tile) {
         return tile.getColor().equals(COLOR);
+    }
+
+    @Override
+    public Score getPoint() {
+        return POINT;
     }
 }

@@ -21,6 +21,7 @@ import java.util.Random;
 import static logic.FrameDelay.delay;
 import static model.AlienTeam.ALIEN_COL;
 import static model.AlienTeam.ALIEN_ROW;
+import static model.Score.startingScore;
 import static model.character.Alien.spawnAlien;
 import static model.character.Bunker.spawnBunker;
 import static model.character.Cannon.spawnCannon;
@@ -32,7 +33,7 @@ public class Game implements Runnable {
     private static final int COL = 200;
     private static final int BUNKER_COUNT = 4;
     private static final long FRAME_DELAY = 50;
-    private static final int MYSTERY_SHIP_FREQUENCY = 1000;
+    private static final int MYSTERY_SHIP_FREQUENCY = 100;
 
     private GraphicsContext gc;
     private Board board;
@@ -49,7 +50,7 @@ public class Game implements Runnable {
         board = new Board(ROW, COL);
         projectiles = new ArrayList<>();
         alienTeam = new AlienTeam();
-        score = new Score();
+        score = startingScore();
         live = new Live();
     }
 
@@ -59,6 +60,14 @@ public class Game implements Runnable {
 
     public Cannon getCannon() {
         return cannon;
+    }
+
+    public Score getScore(){
+        return score;
+    }
+
+    public Live getLive(){
+        return live;
     }
 
     @Override
@@ -186,8 +195,9 @@ public class Game implements Runnable {
             if (Bunker.belongTo(tile)) {
                 board.destroy(tile);
             } else if (Alien.belongTo(tile)) {
-                Alien toBeDestroyed = alienTeam.getAlien(collidedTiles.get(0));
+                Alien toBeDestroyed = alienTeam.destroyAlien(collidedTiles.get(0));
                 if (toBeDestroyed != null) {
+                    score.addPoint(toBeDestroyed.getPoint());
                     board.destroy(toBeDestroyed.getCharacter());
                 }
             } else if (Cannon.belongTo(tile) && !Cannon.isDestroyed) {
@@ -200,6 +210,7 @@ public class Game implements Runnable {
                     toBeRemove.add(toBeDestroy);
                 }
             } else if (MysteryShip.belongTo(tile) && MysteryShip.isPresent) {
+                score.addPoint(mysteryShip.getPoint());
                 destroyMysteryShip();
             }
         });
@@ -207,7 +218,7 @@ public class Game implements Runnable {
     }
 
     public static boolean withinBoundary(int row, int col) {
-        return row >= 0 && row < ROW && col >= 0 && col < COL;
+        return row >= 0 && row < ROW-12 && col >= 0 && col < COL;
     }
 
     private void removeProjectile(ArrayList<Projectile> toBeRemove) {

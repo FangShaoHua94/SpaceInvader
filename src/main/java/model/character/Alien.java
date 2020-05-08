@@ -1,16 +1,19 @@
 package model.character;
 
 import javafx.scene.paint.Color;
+import model.Score;
 import model.Tile;
 import model.character.projectile.Projectile;
+
 
 import java.util.ArrayList;
 
 import static model.character.projectile.AlienProjectile.spawnAlienProjectile;
 
-public class Alien extends CombatCharacter {
+public class Alien extends CombatCharacter implements HasPoint{
 
     private static final Color COLOR = Color.PURPLE;
+    private static final Score POINT=new Score(100);
     private static final int SPEED = 1;
     private static final int DIMENSION = 7;
 
@@ -46,5 +49,10 @@ public class Alien extends CombatCharacter {
 
     public static boolean belongTo(Tile tile) {
         return tile.getColor().equals(COLOR);
+    }
+
+    @Override
+    public Score getPoint() {
+        return POINT;
     }
 }

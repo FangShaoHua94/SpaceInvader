@@ -1,17 +1,25 @@
 package gui;
 
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import logic.Game;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.Board;
+import model.Score;
 import model.Tile;
+
 
 import static model.Tile.DIMENSION;
 
 public class Painter {
 
+    private static final String SCORE_TEXT = "Score: \t\t %d";
+    private static final Font DISPLAY_FONT = Font.font("Verdana", FontWeight.EXTRA_BOLD, 15);
+
     public static void paint(Game game, GraphicsContext gc) {
         paintBoard(game.getBoard(), gc);
+        paintStats(game.getScore(),gc);
     }
 
     public static void paintBoard(Board board, GraphicsContext gc) {
@@ -32,5 +40,11 @@ public class Painter {
         gc.fillRect(tile.getCol() * DIMENSION, tile.getRow() * DIMENSION, DIMENSION, DIMENSION);
     }
 
+    public static void paintStats(Score score,GraphicsContext gc){
+        gc.setFont(DISPLAY_FONT);
+        gc.setFill(Color.SILVER);
+        gc.fillText(String.format(SCORE_TEXT, score.getScore()),
+                50, 570);
+    }
 
 }

@@ -124,7 +124,7 @@ public class AlienTeam {
         return null;
     }
 
-    public Alien getAlien(Tile collidedTile) {
+    public Alien destroyAlien(Tile collidedTile) {
         for (int i = 0; i < ALIEN_ROW; i++) {
             for (int j = 0; j < ALIEN_COL; j++) {
                 Alien alien = aliens[i][j];
