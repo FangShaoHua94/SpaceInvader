@@ -45,7 +45,7 @@ public class AlienTeam {
         switch (direction) {
         case LEFT:
             alien = leftMostAlien();
-            if(alien==null){
+            if (alien == null) {
                 break;
             }
             if (withinBoundary(alien.getCharacter().get(0).getRow(), alien.nextLeftCol())) {
@@ -57,7 +57,7 @@ public class AlienTeam {
             break;
         case RIGHT:
             alien = rightMostAlien();
-            if(alien==null){
+            if (alien == null) {
                 break;
             }
             if (withinBoundary(alien.getCharacter().get(0).getRow(), alien.nextRightCol())) {
@@ -156,5 +156,17 @@ public class AlienTeam {
         Random random = new Random(System.currentTimeMillis() + seed);
         int number = random.nextInt(FIRING_FREQUENCY);
         return number == 1;
+    }
+
+    public boolean invaded(int targetRow) {
+        for (int i = ALIEN_ROW - 1; i >= 0; i--) {
+            for (int j = 0; j < ALIEN_COL; j++) {
+                if (aliens[i][j] != null
+                        && aliens[i][j].getCharacter().stream().anyMatch(tile -> tile.getRow() == targetRow)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

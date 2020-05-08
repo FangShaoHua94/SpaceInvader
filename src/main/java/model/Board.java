@@ -1,9 +1,6 @@
 package model;
 
-import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
-
 
 public class Board {
 
@@ -37,10 +34,6 @@ public class Board {
             }
         }
         return collide;
-    }
-
-    public void remove(ArrayList<Tile> character) {
-        character.forEach(tile -> board[tile.getRow()][tile.getCol()] = null);
     }
 
     public Tile[][] getBoard() {

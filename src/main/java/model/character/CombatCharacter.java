@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static logic.Game.withinBoundary;
 
-public abstract class CombatCharacter extends MovableCharacter {
+public abstract class CombatCharacter extends MovableCharacter implements LeftRightMotion {
 
     private Projectile projectile;
     private boolean fired;
@@ -46,9 +46,5 @@ public abstract class CombatCharacter extends MovableCharacter {
             super.moveRight();
         }
     }
-
-    public abstract int nextLeftCol();
-
-    public abstract int nextRightCol();
 
 }

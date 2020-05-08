@@ -12,7 +12,7 @@ public class AlienProjectile extends Projectile {
     private static final int SPEED = 2;
     private static final int DIMENSION = 2;
 
-    public AlienProjectile(ArrayList<Tile> projectile, Speed speed) {
+    private AlienProjectile(ArrayList<Tile> projectile, Speed speed) {
         super(projectile, speed);
     }
 

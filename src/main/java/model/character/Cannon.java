@@ -11,7 +11,7 @@ import static model.character.projectile.CannonProjectile.spawnCannonProjectile;
 
 public class Cannon extends CombatCharacter {
 
-    public static boolean isDestroyed=false;
+    public static boolean isDestroyed = false;
     private static final Color COLOR = Color.ORANGE;
     private static final int SPEED = 5;
 
@@ -26,7 +26,7 @@ public class Cannon extends CombatCharacter {
                 cannon.add(new Tile(row + i, col + j, COLOR));
             }
         }
-        isDestroyed=false;
+        isDestroyed = false;
         return new Cannon(cannon, new Speed(SPEED));
     }
 

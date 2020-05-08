@@ -11,7 +11,7 @@ public class CannonProjectile extends Projectile {
     protected static final Color COLOR = Color.YELLOW;
     private static final int SPEED = 3;
 
-    public CannonProjectile(ArrayList<Tile> projectile, Speed speed) {
+    private CannonProjectile(ArrayList<Tile> projectile, Speed speed) {
         super(projectile, speed);
     }
 
