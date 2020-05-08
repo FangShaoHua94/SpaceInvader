@@ -37,4 +37,8 @@ public class AlienProjectile extends Projectile {
         return new AlienProjectile(duplicate, new Speed(SPEED));
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
+
 }

@@ -36,4 +36,7 @@ public class MysteryShip extends MovableCharacter implements LeftRightMotion {
         return getCharacter().get(getCharacter().size() - 1).getCol() + SPEED;
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
 }

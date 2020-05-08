@@ -42,4 +42,8 @@ public class CannonProjectile extends Projectile {
         return new CannonProjectile(duplicate, new Speed(SPEED));
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
+
 }

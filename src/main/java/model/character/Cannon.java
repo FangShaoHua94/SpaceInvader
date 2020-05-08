@@ -51,4 +51,7 @@ public class Cannon extends CombatCharacter {
         return getCharacter().get(getCharacter().size() - 1).getCol() + SPEED;
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
 }

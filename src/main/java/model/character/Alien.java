@@ -44,4 +44,7 @@ public class Alien extends CombatCharacter {
         return getCharacter().get(6).getCol() + SPEED;
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
 }

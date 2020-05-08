@@ -18,4 +18,7 @@ public class Bunker extends Character {
         return new Bunker(spawn(row, col, DIMENSION, COLOR));
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
 }
