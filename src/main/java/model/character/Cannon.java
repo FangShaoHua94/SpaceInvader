@@ -12,26 +12,27 @@ import static model.character.projectile.CannonProjectile.spawnCannonProjectile;
 public class Cannon extends CombatCharacter {
 
     private static final Color COLOR = Color.ORANGE;
-    private static final int SPEED=5;
+    private static final int SPEED = 5;
 
     private Cannon(ArrayList<Tile> cannon, Speed speed) {
         super(cannon, speed);
     }
 
-    public static Cannon spawnCannon(int row,int col){
-        ArrayList<Tile> cannon=new ArrayList<>();
-        for(int i=0;i<5;i++){
-            for(int j=0;j<10;j++){
-                cannon.add(new Tile(row+i,col+j,COLOR));
+    public static Cannon spawnCannon(int row, int col) {
+        ArrayList<Tile> cannon = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                cannon.add(new Tile(row + i, col + j, COLOR));
             }
         }
-        return new Cannon(cannon,new Speed(SPEED));
+        return new Cannon(cannon, new Speed(SPEED));
     }
 
     @Override
-    public Projectile fire(){
-        if(!hasFired()) {
-            Projectile projectile =spawnCannonProjectile(getCharacter().get(4).getRow() - 3, getCharacter().get(4).getCol());
+    public Projectile fire() {
+        if (!hasFired()) {
+            Projectile projectile = spawnCannonProjectile(getCharacter().get(4).getRow() - 3,
+                    getCharacter().get(4).getCol());
             setProjectile(projectile);
             return projectile;
         }
@@ -40,12 +41,12 @@ public class Cannon extends CombatCharacter {
 
     @Override
     public int nextLeftCol() {
-        return getCharacter().get(0).getCol()-SPEED;
+        return getCharacter().get(0).getCol() - SPEED;
     }
 
     @Override
     public int nextRightCol() {
-        return getCharacter().get(9).getCol()+SPEED;
+        return getCharacter().get(getCharacter().size() - 1).getCol() + SPEED;
     }
 
 }

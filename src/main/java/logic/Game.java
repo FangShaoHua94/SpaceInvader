@@ -21,10 +21,10 @@ import static model.character.Cannon.spawnCannon;
 
 public class Game implements Runnable {
 
-    private static final int ROW=150;
-    private static final int COL=200;
-    private static final int BUNKER_COUNT=4;
-    private static final long FRAME_DELAY=50;
+    private static final int ROW = 150;
+    private static final int COL = 200;
+    private static final int BUNKER_COUNT = 4;
+    private static final long FRAME_DELAY = 50;
 
     private GraphicsContext gc;
     private Board board;
@@ -34,26 +34,26 @@ public class Game implements Runnable {
     private AlienTeam alienTeam;
     private ArrayList<Projectile> projectiles;
 
-    public Game(GraphicsContext gc){
-        this.gc=gc;
-        board=new Board(ROW,COL);
-        projectiles=new ArrayList<>();
+    public Game(GraphicsContext gc) {
+        this.gc = gc;
+        board = new Board(ROW, COL);
+        projectiles = new ArrayList<>();
         alienTeam = new AlienTeam();
-        score=0;
+        score = 0;
     }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return board;
     }
 
-    public Cannon getCannon(){
+    public Cannon getCannon() {
         return cannon;
     }
 
     @Override
     public void run() {
         initializeGame();
-        while(true) {
+        while (true) {
             Painter.paint(this, gc);
             updateProjectiles();
             alienTeam.move();
@@ -64,78 +64,78 @@ public class Game implements Runnable {
         }
     }
 
-    private void initializeGame(){
+    private void initializeGame() {
         // add bunker
-        for(int i=0;i<BUNKER_COUNT;i++) {
-            board.add(spawnBunker(ROW-50,i*50+15).getCharacter());
+        for (int i = 0; i < BUNKER_COUNT; i++) {
+            board.add(spawnBunker(ROW - 50, i * 50 + 15).getCharacter());
         }
 
         // add cannon
-        cannon=spawnCannon(ROW-20,COL/2-5);
+        cannon = spawnCannon(ROW - 20, COL / 2 - 5);
         board.add(cannon.getCharacter());
 
         // add alien
-        for(int i=0;i<ALIEN_ROW;i++){
-            for(int j=0;j<ALIEN_COL;j++){
-                Alien alien= spawnAlien(i*10+1,j*15+20);
-                alienTeam.addAlien(alien,i,j);
+        for (int i = 0; i < ALIEN_ROW; i++) {
+            for (int j = 0; j < ALIEN_COL; j++) {
+                Alien alien = spawnAlien(i * 10 + 1, j * 15 + 20);
+                alienTeam.addAlien(alien, i, j);
                 board.add(alien.getCharacter());
             }
         }
 
     }
 
-    public void addProjectile(Projectile projectile){
-        if(projectile==null) {
+    public void addProjectile(Projectile projectile) {
+        if (projectile == null) {
             return;
         }
-        ArrayList<Tile> collidedTiles=board.collision(projectile.getCharacter());
-        if(collidedTiles.isEmpty()){
+        ArrayList<Tile> collidedTiles = board.collision(projectile.getCharacter());
+        if (collidedTiles.isEmpty()) {
             // no collision
             projectiles.add(projectile);
             board.add(projectile.getCharacter());
-        }else {
+        } else {
             // collision
             hit(collidedTiles);
             removeProjectile(projectile);
         }
     }
 
-    private void updateProjectiles(){
-        ArrayList<Projectile> toBeRemove=new ArrayList<>();
+    private void updateProjectiles() {
+        ArrayList<Projectile> toBeRemove = new ArrayList<>();
         projectiles.forEach(projectile -> {
-            if(withinBoundary(projectile.nextRow(),projectile.getCol())){
-                ArrayList<Tile> collidedTiles=board.collision(projectile.nextPos().getCharacter());
-                if(collidedTiles.isEmpty() || collidedTiles.stream().allMatch(tile -> projectile.contains(tile))) {
+            if (withinBoundary(projectile.nextRow(), projectile.getCol())) {
+                ArrayList<Tile> collidedTiles = board.collision(projectile.nextPos().getCharacter());
+                if (collidedTiles.isEmpty() || collidedTiles.stream().allMatch(tile -> projectile.contains(tile))) {
                     projectile.advance();
-                }else{
+                } else {
                     toBeRemove.addAll(hit(collidedTiles));
                     toBeRemove.add(projectile);
                 }
-            }else {
+            } else {
                 toBeRemove.add(projectile);
             }
         });
         removeProjectile(toBeRemove);
     }
 
-    private ArrayList<Projectile> hit(ArrayList<Tile> collidedTiles){
-        ArrayList<Projectile> toBeRemove=new ArrayList<>();
-        collidedTiles.forEach(tile-> {
+    private ArrayList<Projectile> hit(ArrayList<Tile> collidedTiles) {
+        ArrayList<Projectile> toBeRemove = new ArrayList<>();
+        collidedTiles.forEach(tile -> {
             Color color = tile.getColor();
             // need to convert color to custom enum to use switch case
             if (color.equals(Color.GREEN)) {
                 board.destroy(tile);
             } else if (color.equals(Color.PURPLE)) {
                 Alien toBeDestroyed = alienTeam.getAlien(collidedTiles.get(0));
-                if(toBeDestroyed!=null){
+                if (toBeDestroyed != null) {
                     board.destroy(toBeDestroyed.getCharacter());
                 }
             } else if (color.equals(Color.ORANGE)) {
 
-            } else if (color.equals(Color.RED) || color.equals(Color.WHITE)){
+            } else if (color.equals(Color.RED) || color.equals(Color.WHITE)) {
                 Projectile toBeDestroy = getProjectile(tile);
-                if(toBeDestroy!=null){
+                if (toBeDestroy != null) {
                     toBeRemove.add(toBeDestroy);
                 }
             }
@@ -143,19 +143,19 @@ public class Game implements Runnable {
         return toBeRemove;
     }
 
-    public void update(){
+    public void update() {
         board.updateBoard();
     }
 
-    public static boolean withinBoundary(int row,int col){
+    public static boolean withinBoundary(int row, int col) {
         return row >= 0 && row < ROW && col >= 0 && col < COL;
     }
 
-    private void removeProjectile(ArrayList<Projectile> toBeRemove){
+    private void removeProjectile(ArrayList<Projectile> toBeRemove) {
         toBeRemove.forEach(projectile -> removeProjectile(projectile));
     }
 
-    private void removeProjectile(Projectile toBeRemove){
+    private void removeProjectile(Projectile toBeRemove) {
         board.remove(toBeRemove.getCharacter());
         alienTeam.resetFire(toBeRemove);
         cannon.resetFire(toBeRemove);
@@ -163,9 +163,9 @@ public class Game implements Runnable {
         update();
     }
 
-    private Projectile getProjectile(Tile tile){
-        for(int i=0;i<projectiles.size();i++){
-            if(projectiles.get(i).contains(tile)){
+    private Projectile getProjectile(Tile tile) {
+        for (int i = 0; i < projectiles.size(); i++) {
+            if (projectiles.get(i).contains(tile)) {
                 return projectiles.get(i);
             }
         }

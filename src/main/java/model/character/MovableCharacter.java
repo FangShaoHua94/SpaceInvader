@@ -17,26 +17,26 @@ public abstract class MovableCharacter extends Character {
         return speed;
     }
 
-    public void moveRight(){
-        for(int i=0;i<speed.getSpeed();i++){
+    public void moveRight() {
+        for (int i = 0; i < speed.getSpeed(); i++) {
             getCharacter().forEach(Tile::moveRight);
         }
     }
 
-    public void moveLeft(){
-        for(int i=0;i<speed.getSpeed();i++){
+    public void moveLeft() {
+        for (int i = 0; i < speed.getSpeed(); i++) {
             getCharacter().forEach(Tile::moveLeft);
         }
     }
 
-    public void moveUp(){
-        for(int i=0;i<speed.getSpeed();i++){
+    public void moveUp() {
+        for (int i = 0; i < speed.getSpeed(); i++) {
             getCharacter().forEach(Tile::moveUp);
         }
     }
 
-    public void moveDown(){
-        for(int i=0;i<speed.getSpeed();i++){
+    public void moveDown() {
+        for (int i = 0; i < speed.getSpeed(); i++) {
             getCharacter().forEach(Tile::moveDown);
         }
     }

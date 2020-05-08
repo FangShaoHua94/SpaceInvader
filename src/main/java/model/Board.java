@@ -11,44 +11,44 @@ public class Board {
     private final int col;
     private Tile[][] board;
 
-    public Board(int row,int col){
-        this.row=row;
-        this.col=col;
-        board=new Tile[row][col];
+    public Board(int row, int col) {
+        this.row = row;
+        this.col = col;
+        board = new Tile[row][col];
     }
 
-    public int getRow(){
+    public int getRow() {
         return row;
     }
 
-    public int getCol(){
+    public int getCol() {
         return col;
     }
 
-    public void add(ArrayList<Tile> character){
-        character.forEach(tile-> board[tile.getRow()][tile.getCol()]=tile);
+    public void add(ArrayList<Tile> character) {
+        character.forEach(tile -> board[tile.getRow()][tile.getCol()] = tile);
     }
 
-    public ArrayList<Tile> collision(ArrayList<Tile> character){
+    public ArrayList<Tile> collision(ArrayList<Tile> character) {
         ArrayList<Tile> collide = new ArrayList<>();
-        for(int i=0;i<character.size();i++){
-            Tile tile=character.get(i);
-            if(board[tile.getRow()][tile.getCol()]!=null){
+        for (int i = 0; i < character.size(); i++) {
+            Tile tile = character.get(i);
+            if (board[tile.getRow()][tile.getCol()] != null) {
                 collide.add(board[tile.getRow()][tile.getCol()]);
             }
         }
         return collide;
     }
 
-    public Tile collision(int row,int col){
+    public Tile collision(int row, int col) {
         return board[row][col];
     }
 
-    public void remove(ArrayList<Tile> character){
-        character.forEach(tile-> board[tile.getRow()][tile.getCol()]=null);
+    public void remove(ArrayList<Tile> character) {
+        character.forEach(tile -> board[tile.getRow()][tile.getCol()] = null);
     }
 
-    public Tile[][] getBoard(){
+    public Tile[][] getBoard() {
         return board;
     }
 
@@ -69,20 +69,20 @@ public class Board {
         });
     }
 
-    public void destroy(Tile tile){
-        board[tile.getRow()][tile.getCol()]=null;
+    public void destroy(Tile tile) {
+        board[tile.getRow()][tile.getCol()] = null;
     }
 
-    public void destroy(ArrayList<Tile> tiles){
+    public void destroy(ArrayList<Tile> tiles) {
         tiles.forEach(tile -> destroy(tile));
     }
 
-    public void print(){
-        for(int i=0;i<row;i++){
-            for(int j=0;j<col;j++){
-                if(board[i][j]==null){
+    public void print() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] == null) {
                     System.out.print('`');
-                }else{
+                } else {
                     if (Color.ORANGE.equals(board[i][j].getColor())) {
                         System.out.print("c");
                     } else if (Color.PURPLE.equals(board[i][j].getColor())) {

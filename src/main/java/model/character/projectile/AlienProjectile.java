@@ -6,23 +6,18 @@ import model.character.Speed;
 
 import java.util.ArrayList;
 
-public class AlienProjectile extends Projectile{
+public class AlienProjectile extends Projectile {
 
-    protected static final Color COLOR= Color.RED;
+    protected static final Color COLOR = Color.RED;
     private static final int SPEED = 2;
+    private static final int DIMENSION = 2;
 
-    public AlienProjectile(ArrayList<Tile> projectile, Speed speed){
-        super(projectile,speed);
+    public AlienProjectile(ArrayList<Tile> projectile, Speed speed) {
+        super(projectile, speed);
     }
 
-    public static Projectile spawnAlienProjectile(int row,int col){
-        ArrayList<Tile> projectile =new ArrayList<>();
-        for (int i=0;i<2;i++){
-            for(int j=0;j<2;j++){
-                projectile.add(new Tile(row+i,col+j,COLOR));
-            }
-        }
-        return new AlienProjectile(projectile,new Speed(SPEED));
+    public static Projectile spawnAlienProjectile(int row, int col) {
+        return new AlienProjectile(spawn(row, col, DIMENSION, COLOR), new Speed(SPEED));
     }
 
     @Override
@@ -32,14 +27,14 @@ public class AlienProjectile extends Projectile{
 
     @Override
     public int nextRow() {
-        return getCharacter().get(3).getRow()+SPEED;
+        return getCharacter().get(getCharacter().size() - 1).getRow() + SPEED;
     }
 
     @Override
     public Projectile duplicate() {
-        ArrayList<Tile> duplicate =new ArrayList<>();
-        getCharacter().forEach(tile -> duplicate.add(new Tile(tile.getRow(),tile.getCol(),tile.getColor())));
-        return new AlienProjectile(duplicate,new Speed(SPEED));
+        ArrayList<Tile> duplicate = new ArrayList<>();
+        getCharacter().forEach(tile -> duplicate.add(new Tile(tile.getRow(), tile.getCol(), tile.getColor())));
+        return new AlienProjectile(duplicate, new Speed(SPEED));
     }
 
 }
