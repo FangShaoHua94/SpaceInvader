@@ -29,8 +29,9 @@ public class Alien extends CombatCharacter {
 
     @Override
     public Projectile fire(){
+        System.out.println("fire");
         if(!hasFired()) {
-            Projectile projectile =spawnAlienProjectile(getCharacter().get(45).getRow() - 3, getCharacter().get(45).getCol());
+            Projectile projectile =spawnAlienProjectile(getCharacter().get(45).getRow() + 1, getCharacter().get(45).getCol());
             setProjectile(projectile);
             return projectile;
         }

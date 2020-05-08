@@ -16,4 +16,8 @@ public abstract class Character {
         return character;
     }
 
+    public boolean contains(Tile tile){
+        return getCharacter().stream().anyMatch(t ->t.equals(tile));
+    }
+
 }

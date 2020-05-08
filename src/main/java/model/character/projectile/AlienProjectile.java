@@ -17,8 +17,8 @@ public class AlienProjectile extends Projectile{
 
     public static Projectile spawnAlienProjectile(int row,int col){
         ArrayList<Tile> projectile =new ArrayList<>();
-        for (int i=0;i<4;i++){
-            for(int j=0;j<1;j++){
+        for (int i=0;i<2;i++){
+            for(int j=0;j<2;j++){
                 projectile.add(new Tile(row+i,col+j,COLOR));
             }
         }
@@ -32,7 +32,7 @@ public class AlienProjectile extends Projectile{
 
     @Override
     public int nextRow() {
-        return getCharacter().get(0).getRow()+SPEED;
+        return getCharacter().get(3).getRow()+SPEED;
     }
 
     @Override

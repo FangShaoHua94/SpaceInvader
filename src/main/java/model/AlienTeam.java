@@ -4,6 +4,7 @@ import model.character.Alien;
 import model.character.projectile.Projectile;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static logic.Game.withinBoundary;
 
@@ -11,6 +12,8 @@ public class AlienTeam {
 
     public static final int ALIEN_ROW=4;
     public static final int ALIEN_COL=11;
+    private static final int FIRING_FREQUENCY=100;
+
     private Alien[][] aliens;
     private Direction direction;
 
@@ -126,5 +129,29 @@ public class AlienTeam {
             }
         }
         return null;
+    }
+
+    public ArrayList<Projectile> fire(){
+        ArrayList<Projectile> projectiles=new ArrayList<>();
+        for(int i=0;i<ALIEN_COL;i++){
+            for(int j=ALIEN_ROW-1;j>=0;j--){
+                if(aliens[j][i]!=null){
+                    if (toFire(j+i)){
+                        projectiles.add(aliens[j][i].fire());
+                    }
+                    break;
+                }
+            }
+        }
+        return projectiles;
+    }
+
+    private boolean toFire(int seed){
+        Random random=new Random(System.currentTimeMillis()+seed);
+        int number =random.nextInt(FIRING_FREQUENCY);
+        if(number==1){
+            return true;
+        }
+        return false;
     }
 }

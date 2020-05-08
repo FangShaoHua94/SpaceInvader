@@ -4,8 +4,6 @@ import model.Tile;
 
 import java.util.ArrayList;
 
-import static logic.Game.withinBoundary;
-
 public abstract class MovableCharacter extends Character {
 
     private Speed speed;

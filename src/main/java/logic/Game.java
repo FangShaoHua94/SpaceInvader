@@ -24,7 +24,7 @@ public class Game implements Runnable {
     private static final int ROW=150;
     private static final int COL=200;
     private static final int BUNKER_COUNT=4;
-    private static final long FRAME_DELAY=100;
+    private static final long FRAME_DELAY=50;
 
     private GraphicsContext gc;
     private Board board;
@@ -57,11 +57,11 @@ public class Game implements Runnable {
             Painter.paint(this, gc);
             updateProjectiles();
             alienTeam.move();
+            alienTeam.fire().forEach(projectile -> addProjectile(projectile));
             update();
 //            board.print();
             delay(FRAME_DELAY);
         }
-
     }
 
     private void initializeGame(){
@@ -106,10 +106,10 @@ public class Game implements Runnable {
         projectiles.forEach(projectile -> {
             if(withinBoundary(projectile.nextRow(),projectile.getCol())){
                 ArrayList<Tile> collidedTiles=board.collision(projectile.nextPos().getCharacter());
-                if(collidedTiles.isEmpty()) {
+                if(collidedTiles.isEmpty() || collidedTiles.stream().allMatch(tile -> projectile.contains(tile))) {
                     projectile.advance();
                 }else{
-                    hit(collidedTiles);
+                    toBeRemove.addAll(hit(collidedTiles));
                     toBeRemove.add(projectile);
                 }
             }else {
@@ -119,7 +119,8 @@ public class Game implements Runnable {
         removeProjectile(toBeRemove);
     }
 
-    private void hit(ArrayList<Tile> collidedTiles){
+    private ArrayList<Projectile> hit(ArrayList<Tile> collidedTiles){
+        ArrayList<Projectile> toBeRemove=new ArrayList<>();
         collidedTiles.forEach(tile-> {
             Color color = tile.getColor();
             // need to convert color to custom enum to use switch case
@@ -132,12 +133,14 @@ public class Game implements Runnable {
                 }
             } else if (color.equals(Color.ORANGE)) {
 
-            } else if (color.equals(Color.RED)){
-
-            } else if(color.equals(Color.WHITE)){
-
+            } else if (color.equals(Color.RED) || color.equals(Color.WHITE)){
+                Projectile toBeDestroy = getProjectile(tile);
+                if(toBeDestroy!=null){
+                    toBeRemove.add(toBeDestroy);
+                }
             }
         });
+        return toBeRemove;
     }
 
     public void update(){
@@ -158,6 +161,15 @@ public class Game implements Runnable {
         cannon.resetFire(toBeRemove);
         projectiles.remove(toBeRemove);
         update();
+    }
+
+    private Projectile getProjectile(Tile tile){
+        for(int i=0;i<projectiles.size();i++){
+            if(projectiles.get(i).contains(tile)){
+                return projectiles.get(i);
+            }
+        }
+        return null;
     }
 
 }

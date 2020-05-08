@@ -55,8 +55,4 @@ public abstract class CombatCharacter extends MovableCharacter{
 
     public abstract int nextRightCol();
 
-    public boolean contains(Tile tile){
-        return getCharacter().stream().anyMatch(t ->t.equals(tile));
-    }
-
 }
