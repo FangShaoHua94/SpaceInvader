@@ -22,7 +22,7 @@ public class Board {
         return col;
     }
 
-    public void add(Tile tile){
+    public void add(Tile tile) {
         board[tile.getRow()][tile.getCol()] = tile;
     }
 

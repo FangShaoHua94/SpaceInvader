@@ -20,6 +20,10 @@ public class AlienProjectile extends Projectile {
         return new AlienProjectile(spawn(row, col, DIMENSION, COLOR), new Speed(SPEED));
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
+
     @Override
     public void advance() {
         moveDown();
@@ -35,10 +39,6 @@ public class AlienProjectile extends Projectile {
         ArrayList<Tile> duplicate = new ArrayList<>();
         getCharacter().forEach(tile -> duplicate.add(new Tile(tile.getRow(), tile.getCol(), tile.getColor())));
         return new AlienProjectile(duplicate, new Speed(SPEED));
-    }
-
-    public static boolean belongTo(Tile tile) {
-        return tile.getColor().equals(COLOR);
     }
 
 }

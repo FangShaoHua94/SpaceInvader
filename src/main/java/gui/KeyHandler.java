@@ -1,18 +1,15 @@
 package gui;
 
-import logic.Game;
 import javafx.event.EventHandler;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
+import logic.Game;
 import model.character.Cannon;
 
-import static logic.FrameDelay.delay;
-
+import static logic.FrameDelay.controlDelay;
 
 public class KeyHandler implements EventHandler<KeyEvent> {
 
-    private static final long CONTROL_DELAY = 10;
     private Game game;
     private GraphicsContext gc;
 
@@ -24,24 +21,32 @@ public class KeyHandler implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent keyEvent) {
         Cannon cannon = game.getCannon();
-        if (game.isTerminated()){
-            return;
-        }
         switch (keyEvent.getCode()) {
         case LEFT:
-            cannon.moveLeft();
+            if (cannon != null) {
+                cannon.moveLeft();
+            }
             break;
         case RIGHT:
-            cannon.moveRight();
+            if (cannon != null) {
+                cannon.moveRight();
+            }
             break;
         case SPACE:
-            game.addProjectile(cannon.fire());
+            if (cannon != null) {
+                game.addProjectile(cannon.fire());
+            }
             break;
+        case ENTER:
+            game.terminate();
+            game = new Game(gc);
+            (new Thread(game)).start();
         default:
             break;
         }
         game.updateBoard();
         Painter.paint(game, gc);
-        delay(CONTROL_DELAY);
+        controlDelay();
     }
+
 }

@@ -9,7 +9,7 @@ public class Live {
         this.live = live;
     }
 
-    public static Live startingLive(){
+    public static Live startingLive() {
         return new Live(STARTING_LIVE);
     }
 

@@ -6,11 +6,10 @@ import model.Tile;
 
 import java.util.ArrayList;
 
-public class MysteryShip extends MovableCharacter implements LeftRightMotion,HasPoint {
+public class MysteryShip extends MovableCharacter implements LeftRightMotion, HasPoint {
 
-    public static boolean isPresent = false;
     private static final Color COLOR = Color.BLUE;
-    private static final Score POINT=new Score(1000);
+    private static final Score POINT = new Score(1000);
     private static final int SPEED = 3;
 
     private MysteryShip(ArrayList<Tile> mysteryShip, Speed speed) {
@@ -24,8 +23,11 @@ public class MysteryShip extends MovableCharacter implements LeftRightMotion,Has
                 mysteryShip.add(new Tile(row + i, col + j, COLOR));
             }
         }
-        isPresent = true;
         return new MysteryShip(mysteryShip, new Speed(SPEED));
+    }
+
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
     }
 
     @Override
@@ -36,10 +38,6 @@ public class MysteryShip extends MovableCharacter implements LeftRightMotion,Has
     @Override
     public int nextRightCol() {
         return getCharacter().get(getCharacter().size() - 1).getCol() + SPEED;
-    }
-
-    public static boolean belongTo(Tile tile) {
-        return tile.getColor().equals(COLOR);
     }
 
     @Override

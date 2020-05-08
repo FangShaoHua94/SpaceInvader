@@ -17,10 +17,6 @@ public class AlienTeam {
     private Alien[][] aliens;
     private Direction direction;
 
-    enum Direction {
-        LEFT, RIGHT
-    }
-
     public AlienTeam() {
         aliens = new Alien[ALIEN_ROW][ALIEN_COL];
         direction = Direction.RIGHT;
@@ -168,5 +164,9 @@ public class AlienTeam {
             }
         }
         return false;
+    }
+
+    enum Direction {
+        LEFT, RIGHT
     }
 }

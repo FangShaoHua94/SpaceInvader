@@ -25,6 +25,10 @@ public class CannonProjectile extends Projectile {
         return new CannonProjectile(projectile, new Speed(SPEED));
     }
 
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
+    }
+
     @Override
     public void advance() {
         moveUp();
@@ -40,10 +44,6 @@ public class CannonProjectile extends Projectile {
         ArrayList<Tile> duplicate = new ArrayList<>();
         getCharacter().forEach(tile -> duplicate.add(new Tile(tile.getRow(), tile.getCol(), tile.getColor())));
         return new CannonProjectile(duplicate, new Speed(SPEED));
-    }
-
-    public static boolean belongTo(Tile tile) {
-        return tile.getColor().equals(COLOR);
     }
 
 }

@@ -1,4 +1,3 @@
-import logic.Game;
 import gui.KeyHandler;
 import gui.Painter;
 import javafx.application.Application;
@@ -7,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import logic.Game;
 
 public class Main extends Application {
 

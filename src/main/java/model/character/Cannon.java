@@ -4,14 +4,12 @@ import javafx.scene.paint.Color;
 import model.Tile;
 import model.character.projectile.Projectile;
 
-
 import java.util.ArrayList;
 
 import static model.character.projectile.CannonProjectile.spawnCannonProjectile;
 
 public class Cannon extends CombatCharacter {
 
-    public static boolean isDestroyed = false;
     private static final Color COLOR = Color.ORANGE;
     private static final int SPEED = 5;
 
@@ -26,8 +24,11 @@ public class Cannon extends CombatCharacter {
                 cannon.add(new Tile(row + i, col + j, COLOR));
             }
         }
-        isDestroyed = false;
         return new Cannon(cannon, new Speed(SPEED));
+    }
+
+    public static boolean belongTo(Tile tile) {
+        return tile.getColor().equals(COLOR);
     }
 
     @Override
@@ -49,9 +50,5 @@ public class Cannon extends CombatCharacter {
     @Override
     public int nextRightCol() {
         return getCharacter().get(getCharacter().size() - 1).getCol() + SPEED;
-    }
-
-    public static boolean belongTo(Tile tile) {
-        return tile.getColor().equals(COLOR);
     }
 }

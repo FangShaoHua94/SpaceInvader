@@ -4,7 +4,6 @@ import model.Tile;
 import model.character.MovableCharacter;
 import model.character.Speed;
 
-
 import java.util.ArrayList;
 
 public abstract class Projectile extends MovableCharacter {

@@ -19,7 +19,9 @@ import model.character.projectile.Projectile;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static logic.FrameDelay.delay;
+import static logic.FrameDelay.flickingDelay;
+import static logic.FrameDelay.gameDelay;
+import static logic.FrameDelay.startingDelay;
 import static model.AlienTeam.ALIEN_COL;
 import static model.AlienTeam.ALIEN_ROW;
 import static model.Live.startingLive;
@@ -34,8 +36,6 @@ public class Game implements Runnable {
     private static final int ROW = 150;
     private static final int COL = 200;
     private static final int BUNKER_COUNT = 4;
-    private static final long GAME_DELAY = 50;
-    private static final long FLICKING_DELAY=20;
     private static final int MYSTERY_SHIP_FREQUENCY = 100;
 
     private GraphicsContext gc;
@@ -56,7 +56,11 @@ public class Game implements Runnable {
         alienTeam = new AlienTeam();
         score = startingScore();
         live = startingLive();
-        terminated=false;
+        terminated = false;
+    }
+
+    public static boolean withinBoundary(int row, int col) {
+        return row >= 0 && row < ROW - 12 && col >= 0 && col < COL;
     }
 
     public Board getBoard() {
@@ -67,31 +71,39 @@ public class Game implements Runnable {
         return cannon;
     }
 
-    public Score getScore(){
+    public Score getScore() {
         return score;
     }
 
-    public Live getLive(){
+    public Live getLive() {
         return live;
     }
 
-    public boolean isTerminated(){
+    public boolean isTerminated() {
         return terminated;
+    }
+
+    public void terminate() {
+        terminated = true;
     }
 
     @Override
     public void run() {
         initializeGame();
+        Painter.paint(this, gc);
+        startingDelay();
         while (!engGame()) {
+            if (isTerminated()) {
+                return;
+            }
             updateProjectiles();
             updateMysteryShip();
             updateAlienTeam();
             updateCannon();
             updateBoard();
             Painter.paint(this, gc);
-            delay(GAME_DELAY);
+            gameDelay();
         }
-        terminated=true;
         endGameEffect();
     }
 
@@ -104,7 +116,7 @@ public class Game implements Runnable {
 
     private void setMysteryShip() {
         Random random = new Random(System.currentTimeMillis());
-        if (random.nextInt(MYSTERY_SHIP_FREQUENCY) == 0 && !MysteryShip.isPresent) {
+        if (random.nextInt(MYSTERY_SHIP_FREQUENCY) == 0 && mysteryShip == null) {
             mysteryShip = spawnMysteryShip(5, COL - 10);
             board.add(mysteryShip.getCharacter());
         }
@@ -137,22 +149,25 @@ public class Game implements Runnable {
         return live.noMoreLive() || alienTeam.invaded(ROW - 70);
     }
 
-    private void endGameEffect(){
-        for(int i=0;i<COL;i++){
-            for (int j=0;j<ROW-12;j++){
-                if((i+j)%2==0){
-                    board.add(new Tile(j,i, Color.GREEN));
-                }else{
-                    board.add(new Tile(j,i, Color.BLACK));
+    private void endGameEffect() {
+        for (int i = 0; i < COL; i++) {
+            for (int j = 0; j < ROW - 12; j++) {
+                if (isTerminated()) {
+                    return;
+                }
+                if ((i + j) % 2 == 0) {
+                    board.add(new Tile(j, i, Color.GREEN));
+                } else {
+                    board.add(new Tile(j, i, Color.BLACK));
                 }
             }
-            Painter.paint(this,gc);
-            delay(FLICKING_DELAY);
+            Painter.paint(this, gc);
+            flickingDelay();
         }
     }
 
     private void updateMysteryShip() {
-        if (MysteryShip.isPresent) {
+        if (mysteryShip != null) {
             if (withinBoundary(mysteryShip.getCharacter().get(0).getRow(), mysteryShip.nextLeftCol())) {
                 mysteryShip.moveLeft();
             } else {
@@ -169,7 +184,7 @@ public class Game implements Runnable {
     }
 
     private void updateCannon() {
-        if (Cannon.isDestroyed) {
+        if (cannon == null) {
             setCannon();
         }
     }
@@ -224,25 +239,21 @@ public class Game implements Runnable {
                     score.addPoint(toBeDestroyed.getPoint());
                     board.destroy(toBeDestroyed.getCharacter());
                 }
-            } else if (Cannon.belongTo(tile) && !Cannon.isDestroyed) {
+            } else if (Cannon.belongTo(tile) && cannon != null) {
                 live.reduceLive();
                 board.destroy(cannon.getCharacter());
-                Cannon.isDestroyed = true;
+                cannon = null;
             } else if (AlienProjectile.belongTo(tile) || CannonProjectile.belongTo(tile)) {
                 Projectile toBeDestroy = getProjectile(tile);
                 if (toBeDestroy != null) {
                     toBeRemove.add(toBeDestroy);
                 }
-            } else if (MysteryShip.belongTo(tile) && MysteryShip.isPresent) {
+            } else if (MysteryShip.belongTo(tile) && mysteryShip != null) {
                 score.addPoint(mysteryShip.getPoint());
                 destroyMysteryShip();
             }
         });
         return toBeRemove;
-    }
-
-    public static boolean withinBoundary(int row, int col) {
-        return row >= 0 && row < ROW-12 && col >= 0 && col < COL;
     }
 
     private void removeProjectile(ArrayList<Projectile> toBeRemove) {
@@ -252,7 +263,9 @@ public class Game implements Runnable {
     private void removeProjectile(Projectile toBeRemove) {
         board.destroy(toBeRemove.getCharacter());
         alienTeam.resetFire(toBeRemove);
-        cannon.resetFire(toBeRemove);
+        if (cannon != null) {
+            cannon.resetFire(toBeRemove);
+        }
         projectiles.remove(toBeRemove);
         updateBoard();
     }
@@ -269,7 +282,6 @@ public class Game implements Runnable {
     private void destroyMysteryShip() {
         board.destroy(mysteryShip.getCharacter());
         mysteryShip = null;
-        MysteryShip.isPresent = false;
     }
 
 }

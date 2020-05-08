@@ -13,14 +13,6 @@ public abstract class Character {
         this.character = character;
     }
 
-    public ArrayList<Tile> getCharacter() {
-        return character;
-    }
-
-    public boolean contains(Tile tile) {
-        return getCharacter().stream().anyMatch(t -> t.equals(tile));
-    }
-
     public static ArrayList<Tile> spawn(int row, int col, int dimension, Color color) {
         ArrayList<Tile> character = new ArrayList<>();
         for (int i = 0; i < dimension; i++) {
@@ -29,6 +21,14 @@ public abstract class Character {
             }
         }
         return character;
+    }
+
+    public ArrayList<Tile> getCharacter() {
+        return character;
+    }
+
+    public boolean contains(Tile tile) {
+        return getCharacter().stream().anyMatch(t -> t.equals(tile));
     }
 
 }
