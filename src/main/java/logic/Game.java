@@ -2,6 +2,7 @@ package logic;
 
 import gui.Painter;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import model.AlienTeam;
 import model.Board;
 import model.Live;
@@ -33,7 +34,8 @@ public class Game implements Runnable {
     private static final int ROW = 150;
     private static final int COL = 200;
     private static final int BUNKER_COUNT = 4;
-    private static final long FRAME_DELAY = 50;
+    private static final long GAME_DELAY = 50;
+    private static final long FLICKING_DELAY=20;
     private static final int MYSTERY_SHIP_FREQUENCY = 100;
 
     private GraphicsContext gc;
@@ -42,6 +44,7 @@ public class Game implements Runnable {
     private MysteryShip mysteryShip;
     private AlienTeam alienTeam;
     private ArrayList<Projectile> projectiles;
+    private boolean terminated;
 
     private Live live;
     private Score score;
@@ -53,6 +56,7 @@ public class Game implements Runnable {
         alienTeam = new AlienTeam();
         score = startingScore();
         live = startingLive();
+        terminated=false;
     }
 
     public Board getBoard() {
@@ -71,6 +75,10 @@ public class Game implements Runnable {
         return live;
     }
 
+    public boolean isTerminated(){
+        return terminated;
+    }
+
     @Override
     public void run() {
         initializeGame();
@@ -81,9 +89,10 @@ public class Game implements Runnable {
             updateCannon();
             updateBoard();
             Painter.paint(this, gc);
-            delay(FRAME_DELAY);
+            delay(GAME_DELAY);
         }
-        System.out.println("game over");
+        terminated=true;
+        endGameEffect();
     }
 
     private void initializeGame() {
@@ -126,6 +135,20 @@ public class Game implements Runnable {
 
     private boolean engGame() {
         return live.noMoreLive() || alienTeam.invaded(ROW - 70);
+    }
+
+    private void endGameEffect(){
+        for(int i=0;i<COL;i++){
+            for (int j=0;j<ROW-12;j++){
+                if((i+j)%2==0){
+                    board.add(new Tile(j,i, Color.GREEN));
+                }else{
+                    board.add(new Tile(j,i, Color.BLACK));
+                }
+            }
+            Painter.paint(this,gc);
+            delay(FLICKING_DELAY);
+        }
     }
 
     private void updateMysteryShip() {

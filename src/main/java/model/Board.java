@@ -22,8 +22,12 @@ public class Board {
         return col;
     }
 
+    public void add(Tile tile){
+        board[tile.getRow()][tile.getCol()] = tile;
+    }
+
     public void add(ArrayList<Tile> character) {
-        character.forEach(tile -> board[tile.getRow()][tile.getCol()] = tile);
+        character.forEach(tile -> add(tile));
     }
 
     public ArrayList<Tile> collision(ArrayList<Tile> character) {

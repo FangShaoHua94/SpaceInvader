@@ -24,6 +24,9 @@ public class KeyHandler implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent keyEvent) {
         Cannon cannon = game.getCannon();
+        if (game.isTerminated()){
+            return;
+        }
         switch (keyEvent.getCode()) {
         case LEFT:
             cannon.moveLeft();
