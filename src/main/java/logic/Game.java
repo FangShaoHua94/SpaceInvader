@@ -5,6 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.AlienTeam;
 import model.Board;
+import model.Live;
+import model.Score;
 import model.Tile;
 import model.character.Alien;
 import model.character.Cannon;
@@ -28,18 +30,20 @@ public class Game implements Runnable {
 
     private GraphicsContext gc;
     private Board board;
-    private int score;
     private Cannon cannon;
-
     private AlienTeam alienTeam;
     private ArrayList<Projectile> projectiles;
+
+    private Live live;
+    private Score score;
 
     public Game(GraphicsContext gc) {
         this.gc = gc;
         board = new Board(ROW, COL);
         projectiles = new ArrayList<>();
         alienTeam = new AlienTeam();
-        score = 0;
+        score = new Score();
+        live=new Live();
     }
 
     public Board getBoard() {
@@ -58,23 +62,32 @@ public class Game implements Runnable {
             updateProjectiles();
             alienTeam.move();
             alienTeam.fire().forEach(this::addProjectile);
+            if(Cannon.isDestroyed){
+                setCannon();
+            }
             update();
-//            board.print();
             delay(FRAME_DELAY);
         }
     }
 
     private void initializeGame() {
-        // add bunker
+        setBunker();
+        setCannon();
+        setAlienTeam();
+    }
+
+    private void setBunker(){
         for (int i = 0; i < BUNKER_COUNT; i++) {
             board.add(spawnBunker(ROW - 50, i * 50 + 15).getCharacter());
         }
+    }
 
-        // add cannon
+    private void setCannon(){
         cannon = spawnCannon(ROW - 20, COL / 2 - 5);
         board.add(cannon.getCharacter());
+    }
 
-        // add alien
+    private void setAlienTeam(){
         for (int i = 0; i < ALIEN_ROW; i++) {
             for (int j = 0; j < ALIEN_COL; j++) {
                 Alien alien = spawnAlien(i * 10 + 1, j * 15 + 20);
@@ -82,7 +95,6 @@ public class Game implements Runnable {
                 board.add(alien.getCharacter());
             }
         }
-
     }
 
     public void addProjectile(Projectile projectile) {
@@ -131,8 +143,11 @@ public class Game implements Runnable {
                 if (toBeDestroyed != null) {
                     board.destroy(toBeDestroyed.getCharacter());
                 }
-            } else if (color.equals(Color.ORANGE)) {
-
+            } else if (color.equals(Color.ORANGE) && !Cannon.isDestroyed) {
+                live.reduceLive();
+                board.destroy(cannon.getCharacter());
+                Cannon.isDestroyed=true;
+                System.out.println(live.getLive()+"");
             } else if (color.equals(Color.RED) || color.equals(Color.WHITE)) {
                 Projectile toBeDestroy = getProjectile(tile);
                 if (toBeDestroy != null) {
