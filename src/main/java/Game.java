@@ -2,34 +2,33 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
+import javafx.scene.Group;
 import javafx.util.Duration;
-import model.Board;
 import model.Live;
 import model.Score;
-import model.character.Character;
-
-import java.util.ArrayList;
+import model.character.Cannon;
 
 import static model.character.Bunker.createBunkers;
-
+import static model.character.Cannon.createCannon;
 
 public class Game {
 
-    private Board board;
     private Timeline animation;
     private Score score;
     private Live live;
+    private Group characters;
 
-    public Game(){
-        board = new Board();
-        score= new Score();
-        live= new Live();
-
+    public Game() {
+        score = new Score();
+        live = new Live();
+        characters = new Group();
+        setCharacters();
+        bindControl();
     }
 
-    public void start(){
+    public void start() {
         animation = new Timeline(
-                new KeyFrame(new Duration(1000), t->{
+                new KeyFrame(new Duration(1000), t -> {
                     checkCollision();
                     System.out.println("running");
                     move();
@@ -39,23 +38,37 @@ public class Game {
         animation.playFromStart();
     }
 
-    private void checkCollision(){
+    private void setCharacters() {
+        characters.getChildren().addAll(createBunkers());
+        Cannon cannon = createCannon();
+        characters.getChildren().add(cannon);
+    }
+
+    private void bindControl() {
+        characters.setFocusTraversable(true);
+        characters.setOnKeyPressed(k -> {
+
+        });
+    }
+
+    private void checkCollision() {
 
     }
 
-    private void move(){
+    private void move() {
 
     }
 
-    public ArrayList<Character> getComponents(){
-        return createBunkers();
+    public Group getComponents() {
+        return characters;
     }
 
-    public IntegerProperty getLiveIntegerProperty(){
+
+    public IntegerProperty getLiveIntegerProperty() {
         return live.integerProperty();
     }
 
-    public IntegerProperty getScoreIntegerProperty(){
+    public IntegerProperty getScoreIntegerProperty() {
         return score.integerProperty();
     }
 

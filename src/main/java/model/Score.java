@@ -7,15 +7,11 @@ public class Score {
 
     private IntegerProperty score;
 
-    public Score(){
+    public Score() {
         score = new SimpleIntegerProperty(0);
     }
 
-    public int getScore(){
-        return score.getValue();
-    }
-
-    public IntegerProperty integerProperty(){
+    public IntegerProperty integerProperty() {
         return score;
     }
 

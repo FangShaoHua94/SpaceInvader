@@ -7,20 +7,20 @@ public class Live {
 
     private IntegerProperty numOfLive;
 
-    public Live(){
-        numOfLive=new SimpleIntegerProperty(3);
+    public Live() {
+        numOfLive = new SimpleIntegerProperty(3);
     }
 
-    public int getNumOfLive(){
+    public int getNumOfLive() {
         return numOfLive.getValue();
     }
 
-    public IntegerProperty integerProperty(){
+    public IntegerProperty integerProperty() {
         return numOfLive;
     }
 
-    public void loseLive(){
-        numOfLive.setValue(numOfLive.getValue()-1);
+    public void loseLive() {
+        numOfLive.setValue(numOfLive.getValue() - 1);
     }
 
 }
