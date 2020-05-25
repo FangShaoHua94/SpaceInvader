@@ -19,4 +19,8 @@ public class Live {
         return numOfLive;
     }
 
+    public void loseLive(){
+        numOfLive.setValue(numOfLive.getValue()-1);
+    }
+
 }
